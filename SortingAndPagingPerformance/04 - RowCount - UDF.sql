@@ -11,7 +11,8 @@ GO
 CREATE FUNCTION PageQuery(
    @query         NVARCHAR(MAX),
    @rowsPerPage   INT,
-   @page          INT
+   @page          INT,
+   @asc           BIT
 ) RETURNS TABLE (
    Id    INT,
    count INT
@@ -31,7 +32,7 @@ SET STATISTICS TIME ON
 
 SELECT   Item.*,
          page_of_data.count
-FROM     PageQuery('SELECT Id, Title FROM Item', 20, 5) page_of_data
+FROM     PageQuery('SELECT Id, Title FROM Item', 20, 5, 0) page_of_data
          INNER JOIN Item ON
             Item.Id = page_of_data.Id
 ORDER BY Title DESC
