@@ -66,7 +66,7 @@ namespace CLRFunctions {
       }
 
       public int Compare(string x, string y) {
-        return this.comparer.Compare(x, y) * -1;
+        return this.comparer.Compare(y, x);
       }
     }
   }
