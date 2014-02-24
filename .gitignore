@@ -1,0 +1,4 @@
+*.user
+*.suo
+SortingAndPagingPerformance/CLRFunctions/bin/*
+SortingAndPagingPerformance/CLRFunctions/obj/*
