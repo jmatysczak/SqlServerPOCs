@@ -7,15 +7,17 @@ using Microsoft.SqlServer.Server;
 
 namespace CLRFunctions {
   public class PriorityQueuePager {
+    private const int COLUMN_INDEX_ID = 0,
+                      COLUMN_INDEX_SORT = 1;
+    private static readonly IComparer<string> COMPARER_ASC = StringComparer.InvariantCulture,
+                                              COMPARER_DESC = new DescendingComparer(COMPARER_ASC);
+
     [SqlFunction(DataAccess = DataAccessKind.Read, FillRowMethodName = "FillRow")]
     public static IEnumerable PageQuery(string query, int rowsPerPage, int page, bool asc) {
-      const int COLUMN_INDEX_ID = 0,
-                COLUMN_INDEX_SORT = 1;
       int maxRows = rowsPerPage * page,
           upperBound = maxRows - 1,
           totalRowCount = 0;
-      IComparer<string> comparer = StringComparer.InvariantCulture;
-      if(!asc) comparer = new DescendingComparer(comparer);
+      IComparer<string> comparer = asc ? COMPARER_ASC : COMPARER_DESC;
       SortedList<string, int> queue = new SortedList<string, int>(maxRows + 1, comparer);
 
       using(SqlConnection connection = new SqlConnection("context connection=true")) {
