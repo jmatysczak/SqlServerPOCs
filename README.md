@@ -25,3 +25,5 @@ The UI only shows a fixed number of subsequent pages, so I don't need the total 
 can just increase the number of rows that top selects, then use row_number to pull off the 20 that
 need to be displayed plus 1 row for each subsequent page in order to render links to the next N
 pages.
+
+Although, I still think there has to be a way to use top and get the total number of pages...
